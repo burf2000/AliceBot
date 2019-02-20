@@ -73,14 +73,7 @@ public class AIMLProcessor {
         topic = cleanPattern(topic);
 
         template = trimTag(template, "template");
-        if (MagicBooleans.jp_tokenize) {
-            String morphPattern = JapaneseUtils.tokenizeSentence(pattern);
-            pattern = morphPattern;
-            String morphThatPattern = JapaneseUtils.tokenizeSentence(that);
-            that = morphThatPattern;
-            String morphTopicPattern = JapaneseUtils.tokenizeSentence(topic);
-            topic = morphTopicPattern;
-        }
+
         Category c = new Category(0, pattern, that, topic, template, aimlFile);
         /*if (template == null) System.out.println("Template is null");
         if (template.length()==0) System.out.println("Template is zero length");*/
@@ -345,7 +338,6 @@ public class AIMLProcessor {
             result = result.trim();
             result = result.replaceAll("(\r\n|\n\r|\r|\n)", " ");
             result = ps.chatSession.bot.preProcessor.normalize(result);
-            result = JapaneseUtils.tokenizeSentence(result);
             String topic = ps.chatSession.predicates.get("topic");     // the that stays the same, but the topic may have changed
             if (MagicBooleans.trace_mode) {
                 System.out.println(trace_count+". <srai>"+result+"</srai> from "+ps.leaf.category.inputThatTopic()+" topic="+topic+") ");
